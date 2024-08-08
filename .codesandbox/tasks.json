@@ -11,53 +11,43 @@
   "tasks": {
     "build": {
       "name": "build",
-      "command": "npm run build",
-      "runAtStart": false
+      "command": "npm run build"
     },
     "release": {
       "name": "release",
-      "command": "npm run release",
-      "runAtStart": false
+      "command": "npm run release"
     },
     "debug": {
       "name": "debug",
-      "command": "npm run debug",
-      "runAtStart": false
+      "command": "npm run debug"
     },
     "dev-build": {
       "name": "dev-build",
-      "command": "npm run dev-build",
-      "runAtStart": false
+      "command": "npm run dev-build"
     },
     "dev-watch": {
       "name": "dev-watch",
-      "command": "npm run dev-watch",
-      "runAtStart": false
+      "command": "npm run dev-watch"
     },
     "clean": {
       "name": "clean",
-      "command": "npm run clean",
-      "runAtStart": false
+      "command": "npm run clean"
     },
     "test": {
       "name": "test",
-      "command": "npm run test",
-      "runAtStart": false
+      "command": "npm run test"
     },
     "coverage": {
       "name": "coverage",
-      "command": "npm run coverage",
-      "runAtStart": false
+      "command": "npm run coverage"
     },
     "test:watch": {
       "name": "test:watch",
-      "command": "npm run test:watch",
-      "runAtStart": false
+      "command": "npm run test:watch"
     },
     "preinstall": {
       "name": "preinstall",
-      "command": "npm run preinstall",
-      "runAtStart": false
+      "command": "npm run preinstall"
     }
   }
 }

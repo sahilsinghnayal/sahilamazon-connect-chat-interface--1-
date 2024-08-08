@@ -94,6 +94,7 @@ export default class ChatActionBar extends React.Component {
       pt: "Fim de papo",
       fr: "Terminer la discussion",
       th: "สิ้นสุดการแชท",
+      de: "Ende des Gesprächs",
     };
 
     return (

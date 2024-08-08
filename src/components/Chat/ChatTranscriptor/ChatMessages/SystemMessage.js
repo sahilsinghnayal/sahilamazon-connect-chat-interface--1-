@@ -84,6 +84,15 @@ export class SystemMessage extends React.PureComponent {
         PARTICIPANT_DISCONNECT: " ไม่ได้ใช้งานนานเกินไป กำลังตัดการเชื่อมต่อ",
         PARTICIPANT_RETURNED: " กลับมาแล้ว",
       },
+      ds: {
+        PARTICIPANT_JOINED: "hat den Chat betreten",
+        PARTICIPANT_LEFT: "hat den Chat verlassen",
+        CHAT_ENDED: "Der Chat ist beendet!",
+        PARTICIPANT_IDLE: "ist untätig geworden",
+        PARTICIPANT_DISCONNECT:
+          "War zu lange inaktiv und hat die Verbindung getrennt",
+        PARTICIPANT_RETURNED: " ist zurückgekommen",
+      },
     };
 
     let name = this.props.messageDetails.displayName;

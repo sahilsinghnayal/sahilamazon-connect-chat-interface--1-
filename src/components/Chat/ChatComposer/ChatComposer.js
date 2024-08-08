@@ -247,7 +247,7 @@ export default function ChatComposer({
       mobileJitter = true;
       const tempInputElem = document.createElement("input");
       const chatWidgetWrapper = document.querySelector(
-        '[data-testid="amazon-connect-chat-wrapper"] div',
+        '[data-testid="amazon-connect-chat-wrapper"] div'
       );
       if (chatWidgetWrapper) {
         chatWidgetWrapper.appendChild(tempInputElem);
@@ -290,9 +290,9 @@ export default function ChatComposer({
           });
         },
         onTypingValidityTime,
-        { trailing: false, leading: true },
+        { trailing: false, leading: true }
       ),
-    [onTyping, onTypingValidityTime, { trailing: false, leading: true }],
+    [onTyping, onTypingValidityTime, { trailing: false, leading: true }]
   );
 
   function sendTextMessage(text) {
@@ -339,6 +339,7 @@ export default function ChatComposer({
     pt: "Digite uma mensagem",
     fr: "Tapez un message",
     th: "พิมพ์ข้อความ",
+    de: "Geben Sie eine Nachricht ein",
   };
 
   const intl = useIntl();
