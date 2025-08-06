@@ -15,20 +15,24 @@ const Actions = styled.div`
   height: ${ACTION_BAR_HEIGHT};
 `;
 
+// const FooterWrapper = styled.div`
+//   order: 3;
+//   @media (max-width: 640px) {
+//     position: absolute;
+//     left: 0;
+//     bottom: 0;
+//     right: 0;
+//   }
+// `;
+
 const FooterWrapper = styled.div`
   order: 3;
-  @media (max-width: 640px) {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
 `;
-
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  // flex-direction: row;
+  flex-direction: column;
   height: 100%;
   align-items: center;
   > button {
@@ -37,10 +41,58 @@ const ButtonWrapper = styled.div`
     font-weight: bold;
   }
 `;
+// const ButtonWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center; // center the button
+//   height: 100%;
+//   justify-content: center;
+//   position: relative;
+//   > button {
+//     min-width: 85px;
+//     margin: ${(props) => props.theme.spacing.mini};
+//     font-weight: bold;
+//   }
+// `;
 
+// const PrivacyPolicyWrapper = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: flex-end;
+//   padding-right: ${(props) => props.theme.spacing.medium};
+//   margin-top: ${(props) => props.theme.spacing.mini};
+
+//   @media (max-width: 640px) {
+//     justify-content: center;
+//     padding-right: 0;
+//   }
+// `;
+const PrivacyPolicyWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: ${(props) => props.theme.spacing.medium};
+  margin-top: ${(props) => props.theme.spacing.mini};
+`;
+const PrivacyLink = styled.a`
+  font-size: 0.9em;
+  text-decoration: underline;
+  color: ${(props) => props.theme.palette.black};
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: none;
+  }
+`;
+
+// const ActionButton = styled(Button)`
+//   margin: ${(props) => props.theme.spacing.small};
+//   width: ${(props) => (props.col ? 100 / props.col - 7 + "%" : "")};
+// `;
 const ActionButton = styled(Button)`
   margin: ${(props) => props.theme.spacing.small};
-  width: ${(props) => (props.col ? 100 / props.col - 7 + "%" : "")};
+  // width: ${(props) => (props.col ? 100 / props.col - 7 + "%" : "")};
 `;
 
 function createMarkup(content) {
@@ -100,7 +152,7 @@ export default class ChatActionBar extends React.Component {
     return (
       <FooterWrapper>
         <Actions>
-          <ButtonWrapper>
+          {/* <ButtonWrapper>
             {(contactStatus === CONTACT_STATUS.CONNECTED ||
               contactStatus === CONTACT_STATUS.CONNECTING) && (
               <React.Fragment>
@@ -119,6 +171,34 @@ export default class ChatActionBar extends React.Component {
                 </ActionButton>
               </React.Fragment>
             )}
+          </ButtonWrapper> */}
+          <ButtonWrapper>
+            <div className="main-button">
+              {(contactStatus === CONTACT_STATUS.CONNECTED ||
+                contactStatus === CONTACT_STATUS.CONNECTING) && (
+                <ActionButton col="2" type="default" onClick={onEndChat}>
+                  <span>{endChatMessage[window.lang]}</span>
+                </ActionButton>
+              )}
+
+              {contactStatus === CONTACT_STATUS.ENDED && (
+                <ActionButton col="2" type="default" onClick={onClose}>
+                  <span>
+                    <FormattedMessage id="Chat.Close" defaultMessage="Close" />
+                  </span>
+                </ActionButton>
+              )}
+            </div>
+
+            <PrivacyPolicyWrapper>
+              <PrivacyLink
+                href="https://www.inquirer.com/privacy-policy/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </PrivacyLink>
+            </PrivacyPolicyWrapper>
           </ButtonWrapper>
         </Actions>
       </FooterWrapper>
