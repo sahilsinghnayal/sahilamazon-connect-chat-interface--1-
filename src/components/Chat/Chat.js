@@ -170,7 +170,13 @@ const HeaderWrapper = styled.div`
 const WelcomeText = styled(Text)`
   padding-bottom: 10px;
 `;
-
+const InlineDisclaimer = styled.div`
+  background: #f5f5f5;
+  color: #666;
+  font-size: 10px;
+  padding: 6px 4px;
+  border-bottom: 1px solid #e1e1e1;
+`;
 const defaultHeaderConfig = {
   isHTML: false,
   render: () => {
@@ -218,7 +224,7 @@ export default class Chat extends Component {
       contactStatus: CONTACT_STATUS.DISCONNECTED,
       parentHeaderWrapperHeight: HEADER_HEIGHT,
       showDisclaimer: true,
-      showQuickReplies: false,
+      showQuickReplies: true,
       disclaimerClosed: false,
       quickReplies: ["Inquire", "Support", "Cancellation"],
     };
@@ -350,6 +356,14 @@ export default class Chat extends Component {
           this.state.contactStatus === CONTACT_STATUS.ENDED) && (
           <ParentHeaderWrapper ref={this.parentHeaderRef}>
             <Header headerConfig={headerConfig} />
+            {this.state.showDisclaimer && (
+              <InlineDisclaimer>
+                Please note that your chat may be monitored or recorded for
+                quality assurance purposes. For security and data protection
+                purposes, please do not share sensitive personal information in
+                the chat.
+              </InlineDisclaimer>
+            )}
           </ParentHeaderWrapper>
         )}
 
@@ -373,18 +387,6 @@ export default class Chat extends Component {
             }
           />
           <StickyQuickReplyContainer>
-            {this.state.showDisclaimer && (
-              <CollapsibleDisclaimer>
-                <span>
-                  Please note: Chat responses may be monitored for quality
-                  assurance.
-                </span>
-                <CloseButton onClick={this.handleCloseDisclaimer}>
-                  ✕
-                </CloseButton>
-              </CollapsibleDisclaimer>
-            )}
-
             {this.state.showQuickReplies && (
               <QuickRepliesContainer>
                 {this.state.quickReplies.map((reply, index) => (
@@ -398,31 +400,28 @@ export default class Chat extends Component {
               </QuickRepliesContainer>
             )}
           </StickyQuickReplyContainer>
-          {this.state.disclaimerClosed && (
-            <ChatComposer
-              contactStatus={this.state.contactStatus}
-              contactId={chatSession.contactId}
-              addMessage={(contactId, data) =>
-                chatSession.addOutgoingMessage(data)
-              }
-              addAttachment={(contactId, attachment) =>
-                chatSession.addOutgoingAttachment(attachment)
-              }
-              onTyping={() => chatSession.sendTypingEvent()}
-              composerConfig={composerConfig}
-              textInputRef={textInputRef}
-            />
-          )}
+
+          <ChatComposer
+            contactStatus={this.state.contactStatus}
+            contactId={chatSession.contactId}
+            addMessage={(contactId, data) =>
+              chatSession.addOutgoingMessage(data)
+            }
+            addAttachment={(contactId, attachment) =>
+              chatSession.addOutgoingAttachment(attachment)
+            }
+            onTyping={() => chatSession.sendTypingEvent()}
+            composerConfig={composerConfig}
+            textInputRef={textInputRef}
+          />
         </ChatComposerWrapper>
 
-        {this.state.disclaimerClosed && (
-          <ChatActionBar
-            onEndChat={() => this.endChat()}
-            onClose={() => this.closeChat()}
-            contactStatus={this.state.contactStatus}
-            footerConfig={footerConfig}
-          />
-        )}
+        <ChatActionBar
+          onEndChat={() => this.endChat()}
+          onClose={() => this.closeChat()}
+          contactStatus={this.state.contactStatus}
+          footerConfig={footerConfig}
+        />
       </ChatWrapper>
     );
   }
