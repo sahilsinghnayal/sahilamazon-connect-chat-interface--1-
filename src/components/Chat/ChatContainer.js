@@ -41,6 +41,7 @@ const Wrapper = styled.div`
 `;
 
 class ChatContainer extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +61,9 @@ class ChatContainer extends Component {
   }
 
   componentWillUnmount() {
+
     EventBus.off(this.submitChatInitiationHandler);
+
   }
 
   initiateChatSession(chatDetails, success, failure) {

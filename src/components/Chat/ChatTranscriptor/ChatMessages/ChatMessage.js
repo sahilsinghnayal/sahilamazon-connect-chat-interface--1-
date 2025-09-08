@@ -14,7 +14,7 @@ import {
   Direction,
   InteractiveMessageType,
 } from "../../datamodel/Model";
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from "react-error-boundary";
 import { Icon, TypingLoader } from "connect-core";
 import { InteractiveMessage } from "./InteractiveMessage";
 import { CSM_CONSTANTS, CSM_CATEGORY } from "../../../../constants/global";
@@ -22,10 +22,14 @@ import { InView } from "react-intersection-observer";
 import { shouldDisplayMessageForType } from "../../../../utils/helper";
 import { modelUtils } from "../../datamodel/Utils";
 import { RichMessageRenderer } from "../../RichMessageComponents";
-import { formatCarouselInteractiveSelection, isCarouselSelectionMessage } from "./InteractiveMessages/Carousel";
+import {
+  formatCarouselInteractiveSelection,
+  isCarouselSelectionMessage,
+} from "./InteractiveMessages/Carousel";
 
 export const MessageBox = styled.div`
-  padding: ${({ theme }) => theme.globals.basePadding} ${({ theme }) => theme.spacing.base};
+  padding: ${({ theme }) => theme.globals.basePadding}
+    ${({ theme }) => theme.spacing.base};
   word-break: break-word;
   white-space: pre-line;
   overflow: auto;
@@ -61,7 +65,7 @@ const Body = styled.div`
 
   ${(props) => (props.messageStyle ? props.messageStyle : "")};
 
-  ${(props) => props.childWillAddBackground ? "background: none" : ""}
+  ${(props) => (props.childWillAddBackground ? "background: none" : "")}
 
   padding: ${(props) => (props.removePadding ? 0 : props.theme.spacing.base)};
   margin-top: ${(props) => props.theme.spacing.mini};
@@ -106,7 +110,8 @@ const StatusText = styled.span`
 
 const TransportErrorMessage = styled.div`
   margin-left: ${(props) => props.theme.chatTranscriptor.msgStatusWidth};
-  padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.micro};
+  padding: ${({ theme }) => theme.spacing.small}
+    ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.micro};
 
   span {
     color: ${({ theme }) => theme.palette.red};
@@ -117,10 +122,18 @@ TransportErrorMessage.RetryButton = styled.a`
   margin-left: ${({ theme }) => theme.spacing.micro};
 `;
 
-export const ErrorFallback = ({ error, resetErrorBoundary, InteractiveMessageType }) => {
-  const metricName = InteractiveMessageType + "_ERROR"
+export const ErrorFallback = ({
+  error,
+  resetErrorBoundary,
+  InteractiveMessageType,
+}) => {
+  const metricName = InteractiveMessageType + "_ERROR";
   if (window.connect && window.connect.csmService) {
-    window.connect.csmService.addCountAndErrorMetric(metricName, CSM_CATEGORY.UI, false);
+    window.connect.csmService.addCountAndErrorMetric(
+      metricName,
+      CSM_CATEGORY.UI,
+      false
+    );
   }
   console.warn("Render Error for:", error);
   return (
@@ -128,8 +141,8 @@ export const ErrorFallback = ({ error, resetErrorBoundary, InteractiveMessageTyp
       <p>Something went wrong</p>
       <button onClick={resetErrorBoundary}>Reload Editor</button>
     </div>
-  )
-}
+  );
+};
 
 export class ParticipantMessage extends PureComponent {
   static propTypes = {
@@ -148,7 +161,7 @@ export class ParticipantMessage extends PureComponent {
       inView: false,
       isVisible: false,
     };
-    this.csmService = undefined
+    this.csmService = undefined;
     if (window.connect && window.connect.csmService) {
       this.csmService = window.connect.csmService;
     }
@@ -171,11 +184,80 @@ export class ParticipantMessage extends PureComponent {
     });
   }
 
+  // renderHeader() {
+  //   const isOutgoingMsg = this.props.messageDetails.transportDetails.direction === Direction.Outgoing;
+  //   const displayName = this.props.messageDetails.displayName || (isOutgoingMsg ? "Customer" : "Agent");
+  //   const transportDetails = this.props.messageDetails.transportDetails;
+  //   const statusStringPrefix = "connect-chat-transport-status-";
+
+  //   let transportStatusElement = <React.Fragment />;
+  //   switch (transportDetails.status) {
+  //     case Status.Sending:
+  //       transportStatusElement = (
+  //         <React.Fragment>
+  //           <StatusText>
+  //             <span>
+  //               <FormattedMessage
+  //                   id={statusStringPrefix + "sending"}
+  //                   defaultMessage="Sending"
+  //               />
+  //             </span>
+  //           </StatusText>
+  //         </React.Fragment>
+  //       );
+  //       break;
+  //     case Status.SendSuccess:
+  //       transportStatusElement = <React.Fragment>{this.timestampToDisplayable(transportDetails.sentTime, isOutgoingMsg)}</React.Fragment>;
+  //       break;
+  //     case Status.SendFailed:
+  //       transportStatusElement = (
+  //         <ErrorText>
+  //           <Icon />
+  //           <span>
+  //             <FormattedMessage
+  //                 id={statusStringPrefix + "sendFailed"}
+  //                 defaultMessage="Failed to send! "
+  //             />
+  //           </span>
+  //         </ErrorText>
+  //       );
+  //       break;
+  //     default:
+  //       transportStatusElement = <React.Fragment />;
+  //   }
+  //   return (
+  //     <React.Fragment>
+  //       <Header.Sender>
+  //         <FormattedMessage
+  //             id={displayName || "DISPLAY_NAME_MISSING"}
+  //             defaultMessage={displayName}
+  //         />
+  //       </Header.Sender>
+  //       <Header.Status>{transportStatusElement}</Header.Status>
+  //     </React.Fragment>
+  //   );
+  // }
   renderHeader() {
-    const isOutgoingMsg = this.props.messageDetails.transportDetails.direction === Direction.Outgoing;
-    const displayName = this.props.messageDetails.displayName || (isOutgoingMsg ? "Customer" : "Agent");
+    const isOutgoingMsg =
+      this.props.messageDetails.transportDetails.direction ===
+      Direction.Outgoing;
+    // const displayName = this.props.messageDetails.displayName || (isOutgoingMsg ? "Customer" : "Agent");
+    const displayName = "";
+
     const transportDetails = this.props.messageDetails.transportDetails;
     const statusStringPrefix = "connect-chat-transport-status-";
+    const customerAvatar =
+      "https://www.shutterstock.com/image-vector/vector-flat-illustration-avatar-user-260nw-2640693497.jpg";
+    const agentAvatar =
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcS4cTXshWVNR_X4wSZiOQZEVYDRH4Vv2CqQ&s";
+    // Avatar styling - different colors for customer vs agent
+    const avatarStyles = {
+      width: "24px",
+      height: "24px",
+      borderRadius: "50%",
+      margin: "5px",
+      objectFit: "cover",
+    };
 
     let transportStatusElement = <React.Fragment />;
     switch (transportDetails.status) {
@@ -185,25 +267,32 @@ export class ParticipantMessage extends PureComponent {
             <StatusText>
               <span>
                 <FormattedMessage
-                    id={statusStringPrefix + "sending"}
-                    defaultMessage="Sending"
+                  id={statusStringPrefix + "sending"}
+                  defaultMessage="Sending"
                 />
               </span>
             </StatusText>
           </React.Fragment>
         );
         break;
-      case Status.SendSuccess:
-        transportStatusElement = <React.Fragment>{this.timestampToDisplayable(transportDetails.sentTime, isOutgoingMsg)}</React.Fragment>;
-        break;
+      // case Status.SendSuccess:
+      //   transportStatusElement = (
+      //     <React.Fragment>
+      //       {this.timestampToDisplayable(
+      //         transportDetails.sentTime,
+      //         isOutgoingMsg
+      //       )}
+      //     </React.Fragment>
+      //   );
+      //   break;
       case Status.SendFailed:
         transportStatusElement = (
           <ErrorText>
             <Icon />
             <span>
               <FormattedMessage
-                  id={statusStringPrefix + "sendFailed"}
-                  defaultMessage="Failed to send! "
+                id={statusStringPrefix + "sendFailed"}
+                defaultMessage="Failed to send! "
               />
             </span>
           </ErrorText>
@@ -212,13 +301,23 @@ export class ParticipantMessage extends PureComponent {
       default:
         transportStatusElement = <React.Fragment />;
     }
+
     return (
       <React.Fragment>
         <Header.Sender>
-          <FormattedMessage
-              id={displayName || "DISPLAY_NAME_MISSING"}
-              defaultMessage={displayName}
+          <img
+            src={isOutgoingMsg ? customerAvatar : agentAvatar}
+            alt={displayName}
+            style={avatarStyles}
+            onError={(e) => {
+              // Fallback to initials if image fails to load
+              e.target.style.display = "none";
+            }}
           />
+          {/* <FormattedMessage
+            id={displayName || "DISPLAY_NAME_MISSING"}
+            defaultMessage={displayName}
+          /> */}
         </Header.Sender>
         <Header.Status>{transportStatusElement}</Header.Status>
       </React.Fragment>
@@ -239,16 +338,20 @@ export class ParticipantMessage extends PureComponent {
     return (
       <React.Fragment>
         <Footer.MessageReceipt>
-          {lastReadReceipt && <FormattedMessage
+          {lastReadReceipt && (
+            <FormattedMessage
               id="connect-chat-read-receipt"
               defaultMessage="Read"
               aria-live="polite"
-          />}
-          {lastDeliveredReceipt && <FormattedMessage
+            />
+          )}
+          {lastDeliveredReceipt && (
+            <FormattedMessage
               id="connect-chat-delivered-receipt"
               defaultMessage="Delivered"
               aria-live="polite"
-          />}
+            />
+          )}
         </Footer.MessageReceipt>
       </React.Fragment>
     );
@@ -276,7 +379,7 @@ export class ParticipantMessage extends PureComponent {
     ) {
       this.props.sendReadReceipt(
         id,
-        type === ATTACHMENT_MESSAGE ? { disableThrottle: true } : {},
+        type === ATTACHMENT_MESSAGE ? { disableThrottle: true } : {}
       );
     }
   }
@@ -286,14 +389,14 @@ export class ParticipantMessage extends PureComponent {
     this.visibilityChangeListener();
     document.addEventListener(
       "visibilitychange",
-      this.visibilityChangeListener.bind(this),
+      this.visibilityChangeListener.bind(this)
     );
   }
 
   componentWillUnmount() {
     document.removeEventListener(
       "visibilitychange",
-      this.visibilityChangeListener.bind(this),
+      this.visibilityChangeListener.bind(this)
     );
   }
 
@@ -315,8 +418,13 @@ export class ParticipantMessage extends PureComponent {
       bodyStyleConfig.hideDirectionArrow = true;
       bodyStyleConfig.removePadding = true;
 
-      const { templateType } = JSON.parse(this.props.messageDetails.content.data);
-      if (templateType === InteractiveMessageType.QUICK_REPLY || templateType === InteractiveMessageType.CAROUSEL) {
+      const { templateType } = JSON.parse(
+        this.props.messageDetails.content.data
+      );
+      if (
+        templateType === InteractiveMessageType.QUICK_REPLY ||
+        templateType === InteractiveMessageType.CAROUSEL
+      ) {
         bodyStyleConfig.childWillAddBackground = true;
       }
     }
@@ -330,10 +438,13 @@ export class ParticipantMessage extends PureComponent {
       ) {
         content = this.props.messageDetails.Attachments[0];
         contentType = content.ContentType;
-        if (content.Status === AttachmentStatus.REJECTED && error === undefined) {
+        if (
+          content.Status === AttachmentStatus.REJECTED &&
+          error === undefined
+        ) {
           error = {
-            message: "Attachment was rejected."
-          }
+            message: "Attachment was rejected.",
+          };
         }
       } else {
         content = {
@@ -349,30 +460,61 @@ export class ParticipantMessage extends PureComponent {
       }
     }
 
+    const mainBodyDirection =
+      direction === Direction.Outgoing ? "row-reverse" : "row";
+    const messageBodyStyle =
+      direction === Direction.Outgoing ? "flex-start" : "flex-end";
+    const messageBodyBackground =
+      direction === Direction.Outgoing ? "#D1E7F1" : "#DCDCDC";
     return (
-      <div data-testid="main-message">
+      <div
+        data-testid="main-message"
+        style={{
+          display: "flex",
+          flexDirection: mainBodyDirection,
+          alignItems: "flex-end",
+        }}
+      >
         <Header data-testid="message-header">{this.renderHeader()}</Header>
         <InView onChange={(inView) => this.setState({ inView })}>
           {({ ref }) => (
             <Body
-              data-testid="message-body"
-              direction={direction}
-              messageStyle={messageStyle}
-              {...bodyStyleConfig}
-              ref={this.props.isLatestMessage ? ref : null}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: messageBodyStyle,
+                backgroundColor: messageBodyBackground,
+              }}
             >
-              {this.renderContent(content, contentType)}
+              <div
+                data-testid="message-body"
+                direction={direction}
+                messageStyle={messageStyle}
+                {...bodyStyleConfig}
+                ref={this.props.isLatestMessage ? ref : null}
+                style={{ fontWeight: "450" }}
+              >
+                {this.renderContent(content, contentType)}
+              </div>
+              <div
+                style={{
+                  fontSize: "10px",
+                  color: "grey",
+                }}
+              >
+                {this.timestampToDisplayable(
+                  this.props.messageDetails.transportDetails.sentTime
+                )}
+              </div>
             </Body>
           )}
         </InView>
-        <Footer>
-          {this.renderMessageReceipts()}
-        </Footer>
+        <Footer>{this.renderMessageReceipts()}</Footer>
         {error && this.renderTransportError(error)}
       </div>
     );
   }
-  
+
   triggerCountMetric(csmType) {
     if (this.csmService) {
       this.csmService.addCountMetric(csmType, CSM_CATEGORY.UI);
@@ -388,13 +530,17 @@ export class ParticipantMessage extends PureComponent {
         />
       );
     }
-    
+
     if (contentType === ContentType.MESSAGE_CONTENT_TYPE.INTERACTIVE_MESSAGE) {
       const { data, templateType } = JSON.parse(content);
       if (this.props.isLatestMessage) {
-        this.triggerCountMetric(templateType + CSM_CONSTANTS.RENDER_INTERACTIVE_MESSAGE)
+        this.triggerCountMetric(
+          templateType + CSM_CONSTANTS.RENDER_INTERACTIVE_MESSAGE
+        );
         return (
-          <ErrorBoundary fallback={<ErrorFallback InteractiveMessageType={templateType}/>} >
+          <ErrorBoundary
+            fallback={<ErrorFallback InteractiveMessageType={templateType} />}
+          >
             <InteractiveMessage
               content={data.content}
               templateType={templateType}
@@ -402,22 +548,23 @@ export class ParticipantMessage extends PureComponent {
               textInputRef={this.props.textInputRef}
             />
           </ErrorBoundary>
-        )
+        );
       }
-      this.triggerCountMetric(CSM_CONSTANTS.RENDER_RICH_MESSAGE)
-      return <RichMessageRenderer content={data.content.title} />
+      this.triggerCountMetric(CSM_CONSTANTS.RENDER_RICH_MESSAGE);
+      return <RichMessageRenderer content={data.content.title} />;
     }
     if (contentType === ContentType.MESSAGE_CONTENT_TYPE.TEXT_MARKDOWN) {
-      this.triggerCountMetric(CSM_CONSTANTS.RENDER_RICH_MESSAGE)
-      return <RichMessageRenderer content={content} />
+      this.triggerCountMetric(CSM_CONSTANTS.RENDER_RICH_MESSAGE);
+      return <RichMessageRenderer content={content} />;
     }
-    this.triggerCountMetric(CSM_CONSTANTS.RENDER_PLAIN_MESSAGE)
+    this.triggerCountMetric(CSM_CONSTANTS.RENDER_PLAIN_MESSAGE);
     if (isCarouselSelectionMessage(content)) {
-      const carouselAndNestedPickerTitle = formatCarouselInteractiveSelection(content);
-      return <PlainTextMessage content={carouselAndNestedPickerTitle} />
+      const carouselAndNestedPickerTitle =
+        formatCarouselInteractiveSelection(content);
+      return <PlainTextMessage content={carouselAndNestedPickerTitle} />;
     }
 
-    return <PlainTextMessage content={content} />
+    return <PlainTextMessage content={content} />;
   }
 
   renderTransportError(error) {
@@ -462,7 +609,7 @@ class PlainTextMessage extends PureComponent {
 const ParticipantTypingBox = styled(MessageBox)`
   > ${Body}{
     display: inline-block;
-    float: ${props =>
+    float: ${(props) =>
       props.direction === Direction.Outgoing ? "right" : "left"}
 `;
 
