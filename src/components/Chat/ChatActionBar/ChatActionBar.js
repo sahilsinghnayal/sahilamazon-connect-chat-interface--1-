@@ -177,7 +177,7 @@ export default class ChatActionBar extends React.Component {
               {(contactStatus === CONTACT_STATUS.CONNECTED ||
                 contactStatus === CONTACT_STATUS.CONNECTING) && (
                 <ActionButton col="2" type="default" onClick={onEndChat}>
-                  <span>{endChatMessage[window.lang]}</span>
+                  <span>End chat</span>
                 </ActionButton>
               )}
 
@@ -190,7 +190,7 @@ export default class ChatActionBar extends React.Component {
               )}
             </div>
 
-            <PrivacyPolicyWrapper>
+            {/* <PrivacyPolicyWrapper>
               <PrivacyLink
                 href="https://www.inquirer.com/privacy-policy/"
                 target="_blank"
@@ -198,7 +198,7 @@ export default class ChatActionBar extends React.Component {
               >
                 Privacy Policy
               </PrivacyLink>
-            </PrivacyPolicyWrapper>
+            </PrivacyPolicyWrapper> */}
           </ButtonWrapper>
         </Actions>
       </FooterWrapper>
