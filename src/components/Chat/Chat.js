@@ -171,11 +171,9 @@ const WelcomeText = styled(Text)`
   padding-bottom: 10px;
 `;
 const InlineDisclaimer = styled.div`
-  background: #f5f5f5;
+  background: rgb(255 255 255);
   color: #666;
   font-size: 10px;
-  padding: 6px 4px;
-  border-bottom: 1px solid #e1e1e1;
 `;
 const defaultHeaderConfig = {
   isHTML: false,
@@ -356,6 +354,13 @@ export default class Chat extends Component {
           this.state.contactStatus === CONTACT_STATUS.ENDED) && (
           <ParentHeaderWrapper ref={this.parentHeaderRef}>
             <Header headerConfig={headerConfig} />
+            <ChatActionBar
+              onEndChat={() => this.endChat()}
+              onClose={() => this.closeChat()}
+              contactStatus={this.state.contactStatus}
+              footerConfig={footerConfig}
+            />
+
             {this.state.showDisclaimer && (
               <InlineDisclaimer>
                 Please note that your chat may be monitored or recorded for
@@ -386,7 +391,7 @@ export default class Chat extends Component {
               chatSession.sendReadReceipt(...inputParams)
             }
           />
-          <StickyQuickReplyContainer>
+          {/* <StickyQuickReplyContainer>
             {this.state.showQuickReplies && (
               <QuickRepliesContainer>
                 {this.state.quickReplies.map((reply, index) => (
@@ -399,7 +404,7 @@ export default class Chat extends Component {
                 ))}
               </QuickRepliesContainer>
             )}
-          </StickyQuickReplyContainer>
+          </StickyQuickReplyContainer> */}
 
           <ChatComposer
             contactStatus={this.state.contactStatus}
@@ -415,13 +420,6 @@ export default class Chat extends Component {
             textInputRef={textInputRef}
           />
         </ChatComposerWrapper>
-
-        <ChatActionBar
-          onEndChat={() => this.endChat()}
-          onClose={() => this.closeChat()}
-          contactStatus={this.state.contactStatus}
-          footerConfig={footerConfig}
-        />
       </ChatWrapper>
     );
   }
